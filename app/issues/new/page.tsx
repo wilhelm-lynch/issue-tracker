@@ -1,6 +1,6 @@
 "use client";
 
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic";
 import axios from "axios";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "../../components/Spinner";
@@ -13,6 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { createIssueSchema } from "@/app/validationSchemas";
 import "easymde/dist/easymde.min.css";
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
