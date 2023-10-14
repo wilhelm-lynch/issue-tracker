@@ -1,5 +1,4 @@
 import prisma from "@/prisma/client";
-import delay from "delay";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
@@ -17,8 +16,6 @@ const IssueDetailPage = async ({ params: { id } }: Props) => {
   });
 
   if (!issue) notFound();
-
-  await delay(2000);
 
   return (
     <div>
