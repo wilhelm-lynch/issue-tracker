@@ -2,6 +2,7 @@ import { issueSchema } from "@/app/validationSchemas";
 import { NextRequest, NextResponse } from "next/server";
 import StatusCodes from "http-status-codes";
 import prisma from "@/prisma/client";
+import { Status } from ".prisma/client";
 
 export const PATCH = async (
   request: NextRequest,
@@ -33,6 +34,7 @@ export const PATCH = async (
     where: { id: issue.id },
     data: {
       title: body.title,
+      status: Status.CLOSED,
       description: body.description,
     },
   });
