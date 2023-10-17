@@ -1,9 +1,8 @@
-import { issueSchema } from "@/app/validationSchemas";
-import { NextRequest, NextResponse } from "next/server";
-import StatusCodes from "http-status-codes";
-import prisma from "@/prisma/client";
 import { Status } from ".prisma/client";
-import { STATUS_CODES } from "http";
+import { issueSchema } from "@/app/validationSchemas";
+import prisma from "@/prisma/client";
+import StatusCodes from "http-status-codes";
+import { NextRequest, NextResponse } from "next/server";
 
 export const PATCH = async (
   request: NextRequest,
