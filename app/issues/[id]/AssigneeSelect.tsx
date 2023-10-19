@@ -10,16 +10,7 @@ import { useState } from "react";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const [value, setValue] = useState("");
-  const {
-    data: users,
-    error,
-    isLoading,
-  } = useQuery<User[]>({
-    queryKey: ["users"],
-    queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
-    staleTime: ms("60s"),
-    retry: 3,
-  });
+  const { data: users, error, isLoading } = useUsers();
 
   if (isLoading) return <Skeleton />;
 
@@ -39,9 +30,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     <>
       <Select.Root
         defaultValue={issue.assignedToUserId || "unassigned"}
-        onValueChange={async (userId) => {
-          await onSelectValueChange(userId);
-        }}
+        onValueChange={onSelectValueChange}
       >
         <Select.Trigger placeholder="Assign..." />
         <Select.Content>
@@ -60,5 +49,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     </>
   );
 };
+
+const useUsers = () =>
+  useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
+    staleTime: ms("60s"),
+    retry: 3,
+  });
 
 export default AssigneeSelect;
