@@ -1,5 +1,5 @@
 import { Status } from ".prisma/client";
-import { issueSchema } from "@/app/validationSchemas";
+import { patchIssueSchema } from "@/app/validationSchemas";
 import prisma from "@/prisma/client";
 import StatusCodes from "http-status-codes";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,13 +10,27 @@ export const PATCH = async (
 ) => {
   const body = await request.json();
 
-  const validation = issueSchema.safeParse(body);
+  const validation = patchIssueSchema.safeParse(body);
 
   if (!validation.success)
     return NextResponse.json(
       { error: validation.error.format() },
       { status: StatusCodes.BAD_REQUEST }
     );
+
+  const { assignedToUserId, description, title } = body;
+
+  if (assignedToUserId) {
+    const user = await prisma.user.findUnique({
+      where: { id: assignedToUserId },
+    });
+
+    if (!user)
+      return NextResponse.json(
+        { error: "Invalid user." },
+        { status: StatusCodes.NOT_FOUND }
+      );
+  }
 
   const issue = await prisma.issue.findUnique({
     where: {
@@ -33,9 +47,10 @@ export const PATCH = async (
   const updatedIssue = await prisma.issue.update({
     where: { id: issue.id },
     data: {
-      title: body.title,
-      status: Status.CLOSED,
-      description: body.description,
+      title,
+      description,
+      assignedToUserId,
+      status: Status.OPEN,
     },
   });
 
