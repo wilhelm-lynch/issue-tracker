@@ -1,9 +1,10 @@
+import QueryClientProvider from "./QueryClientProvider";
+import NavBar from "./NavBar";
+import { Inter } from "next/font/google";
+import type { Metadata } from "next";
 import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import NavBar from "./NavBar";
 import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 
 const inter = Inter({
@@ -24,13 +25,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Theme appearance="light" accentColor="violet">
-          <NavBar />
-          <main className="p-5">
-            <Container>{children}</Container>
-          </main>
-          {/* <ThemePanel /> */}
-        </Theme>
+        <QueryClientProvider>
+          <Theme appearance="light" accentColor="violet">
+            <NavBar />
+            <main className="p-5">
+              <Container>{children}</Container>
+            </main>
+            {/* <ThemePanel /> */}
+          </Theme>
+        </QueryClientProvider>
       </body>
     </html>
   );
