@@ -18,7 +18,7 @@ const IssueStatusFilter = () => {
         {statuses.map((status) => (
           <Select.Item
             key={status.value}
-            value={status.value ? status.value : "Unassigned"}
+            value={status.value ? status.value : ""}
           >
             {status.label}
           </Select.Item>

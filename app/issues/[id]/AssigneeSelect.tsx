@@ -9,7 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
-  const [value, setValue] = useState("");
   const { data: users, error, isLoading } = useUsers();
 
   if (isLoading) return <Skeleton />;
@@ -19,7 +18,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const onSelectValueChange = (Id: string) => {
     axios
       .patch("/api/issues/" + issue.id, {
-        assignedToUserId: Id === "unassigned" ? null : Id,
+        assignedToUserId: Id === "" ? null : Id,
       })
       .catch(() => {
         toast.error("Changes couldn't be saved.");
@@ -29,14 +28,14 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   return (
     <>
       <Select.Root
-        defaultValue={issue.assignedToUserId || "unassigned"}
+        defaultValue={issue.assignedToUserId || ""}
         onValueChange={onSelectValueChange}
       >
         <Select.Trigger placeholder="Assign..." />
         <Select.Content>
           <Select.Group>
             <Select.Label>Suggestions</Select.Label>
-            <Select.Item value="unassigned">Unassigned</Select.Item>
+            <Select.Item value="">Unassigned</Select.Item>
             {users?.map((user) => (
               <Select.Item key={user.id} value={user.id}>
                 {user.name}
