@@ -17,6 +17,7 @@ const IssueStatusFilter = () => {
 
   const onStatusFilter = (status: Status) => {
     const params = new URLSearchParams();
+
     if (status) params.append("status", status);
 
     if (searchParams.get("orderBy"))
