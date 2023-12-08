@@ -12,7 +12,9 @@ const statusMap: Record<
 
 const IssueStatusBadge = ({ status }: { status: Status }) => {
   return (
-    <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
+    <Badge color={statusMap[status].color} className="block md: mt-1">
+      {statusMap[status].label}
+    </Badge>
   );
 };
 
