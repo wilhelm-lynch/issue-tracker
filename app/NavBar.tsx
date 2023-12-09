@@ -7,6 +7,7 @@ import imageIcon from "@/public/user.png";
 import { AiFillBug } from "react-icons/ai";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Skeleton } from "@/app/components";
 import {
   Avatar,
   Box,
@@ -64,7 +65,7 @@ const NavLinks = () => {
 const AuthStatus = () => {
   const { status, data: session } = useSession();
 
-  if (status === "loading") return null;
+  if (status === "loading") return <Skeleton width="3rem" />;
 
   if (status === "unauthenticated")
     return (
