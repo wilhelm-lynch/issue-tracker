@@ -1,14 +1,20 @@
 import { Status } from ".prisma/client";
+import authOptions from "@/app/auth/authOptions";
 import { patchIssueSchema } from "@/app/validationSchemas";
 import prisma from "@/prisma/client";
 import delay from "delay";
 import StatusCodes from "http-status-codes";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const PATCH = async (
   request: NextRequest,
   { params }: { params: { id: string } }
 ) => {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({}, { status: StatusCodes.UNAUTHORIZED });
+
   const body = await request.json();
 
   const validation = patchIssueSchema.safeParse(body);
@@ -62,6 +68,10 @@ export const DELETE = async (
   request: NextRequest,
   { params }: { params: { id: string } }
 ) => {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({}, { status: StatusCodes.UNAUTHORIZED });
+
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   });
