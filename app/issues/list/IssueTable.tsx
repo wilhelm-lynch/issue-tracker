@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { Link, Table } from "@radix-ui/themes";
 import { IssueStatusBadge } from "@/app/components";
-import { ArrowUpIcon } from "@radix-ui/react-icons";
+import { TriangleUpIcon } from "@radix-ui/react-icons";
 import { Issue, Status } from ".prisma/client";
 
 export interface IssueQuery {
@@ -32,7 +32,7 @@ const IssueTable = ({ searchParams, issues }: Props) => {
               >
                 {column.label}
                 {column.value === searchParams.orderBy && (
-                  <ArrowUpIcon className="inline" />
+                  <TriangleUpIcon className="inline" />
                 )}
               </NextLink>
             </Table.ColumnHeaderCell>

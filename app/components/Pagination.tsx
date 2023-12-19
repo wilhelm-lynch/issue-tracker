@@ -11,12 +11,16 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
-  ItemsCount: number;
+  ItemCount: number;
   pageSize: number;
   currentPage: number;
 }
 
-const Pagination = ({ ItemsCount, pageSize, currentPage }: Props) => {
+const Pagination = ({
+  ItemCount: ItemsCount,
+  pageSize,
+  currentPage,
+}: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 

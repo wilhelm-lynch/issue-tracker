@@ -35,7 +35,7 @@ export const PATCH = async (
     if (!user)
       return NextResponse.json(
         { error: "Invalid user." },
-        { status: StatusCodes.NOT_FOUND }
+        { status: StatusCodes.BAD_REQUEST }
       );
   }
 
